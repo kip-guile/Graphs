@@ -90,7 +90,7 @@ class Graph:
             path = q.dequeue()
             vertex = path[-1]
 
-            if vertex not in visited_verts:
+            if vertex not in visited:
                 if vertex == destination_vertex:
                     return path
 
@@ -99,7 +99,7 @@ class Graph:
             for next_vert in self.vertices[vertex]:
                 path = list(path)
                 path.append(next_vert)
-                q.enqueue(pth)
+                q.enqueue(path)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -115,7 +115,7 @@ class Graph:
             path = s.pop()
             vertex = path[-1]
 
-            if vertex not in visited_verts:
+            if vertex not in visited:
                 if vertex == destination_vertex:
                     return path
 
@@ -124,9 +124,9 @@ class Graph:
             for next_vert in self.vertices[vertex]:
                 path = list(path)
                 path.append(next_vert)
-                q.push(path)
+                s.push(path)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -134,8 +134,8 @@ class Graph:
 
         This should be done using recursion.
         """
-       if visited is None:
-           visited = set()
+        if visited is None:
+            visited = set()
 
         if path is None:
             path = []
@@ -148,7 +148,8 @@ class Graph:
             visited.add(starting_vertex)
             for neighor in self.get_neighbors(starting_vertex):
                 if neighor not in visited:
-                    new_path = self.dfs_recursive(neighor, destination_vertex, visited, path)
+                    new_path = self.dfs_recursive(
+                        neighor, destination_vertex, visited, path)
                     if new_path is not None:
                         return new_path
         return None
