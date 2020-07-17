@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from world import World
+from util import Stack
 
 import random
 from ast import literal_eval
@@ -28,7 +29,19 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
+stack = Stack()
+graph = {}
 
+while len(graph) < 500 and len(traversal_path) < 2000:
+    currentRoom = player.current_room.id
+    if currentRoom not in graph:
+        current_exists = {}
+
+        for exit in player.current_room.getExists():
+            current_exists[exit] = '?'
+        graph[currentRoom] = current_exists
+
+    current_exists = graph[currentRoom]
 
 # TRAVERSAL TEST
 visited_rooms = set()
