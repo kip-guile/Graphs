@@ -23,17 +23,17 @@ class Graph:
 
 
 def earliest_ancestor(ancestors, starting_node):
+    # build graph from input
     graph = Graph()
-
     for ancestor in ancestors:
         graph.add_vertex(ancestor[0])
         graph.add_vertex(ancestor[1])
     for ancestor in ancestors:
         graph.add_edge(ancestor[1], ancestor[0])
-
+    # instantiate a queue and queue in the starting node
     q = Queue()
     q.enqueue([starting_node])
-
+    # set
     max_path_length = 1
     earliest_ancestor = -1
 
